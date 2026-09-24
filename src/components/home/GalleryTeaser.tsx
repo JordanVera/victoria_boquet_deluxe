@@ -5,8 +5,11 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { GALLERY_IMAGES } from '@/lib/data';
 import { ArrowRight } from 'lucide-react';
+import { galleryAlt } from '@/i18n/helpers';
+import { useI18n } from '@/components/i18n/LanguageProvider';
 
 export default function GalleryTeaser() {
+  const { t } = useI18n();
   const images = GALLERY_IMAGES.filter(
     (img) => 'featured' in img && img.featured,
   ).slice(0, 6);
@@ -20,9 +23,9 @@ export default function GalleryTeaser() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-[#e56b8c] text-[10px] tracking-[0.35em] uppercase mb-3"
+              className="text-[#7A2432] text-[10px] tracking-[0.35em] uppercase mb-3"
             >
-              Recent Blooms
+              {t.gallery.teaserEyebrow}
             </motion.p>
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
@@ -31,14 +34,14 @@ export default function GalleryTeaser() {
               transition={{ delay: 0.1 }}
               className="font-serif text-foreground text-4xl sm:text-5xl"
             >
-              Gallery
+              {t.gallery.title}
             </motion.h2>
           </div>
           <Link
             href="/gallery"
-            className="inline-flex items-center gap-2 text-[#e56b8c] text-xs tracking-[0.2em] uppercase hover:gap-3 transition-all duration-200"
+            className="inline-flex items-center gap-2 text-[#7A2432] text-xs tracking-[0.2em] uppercase hover:gap-3 transition-all duration-200"
           >
-            View All Photos <ArrowRight size={12} />
+            {t.gallery.viewAll} <ArrowRight size={12} />
           </Link>
         </div>
 
@@ -63,7 +66,7 @@ export default function GalleryTeaser() {
                 >
                   <Image
                     src={img.src}
-                    alt={img.alt}
+                    alt={galleryAlt(t, img.id)}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                     sizes="(max-width: 768px) 50vw, 33vw"

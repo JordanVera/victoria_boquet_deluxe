@@ -1,22 +1,22 @@
 import type { Metadata } from 'next';
 import { COMPANY } from './data';
 
-export const SITE_URL = 'https://bloomifyboutique.com';
+export const SITE_URL = 'https://victoriaboquetdeluxe.com';
 
 export const SEO = {
-  title: 'Bloomify Boutique | Custom Ramós & Floral Designs in El Paso',
+  title: 'Victoria Boquet Deluxe | Luxury Ramós & Floral Designs in Houston',
   description:
-    'Bloomify Boutique designs custom rose ramós and wrapped bouquets in El Paso, TX. 25–100 roses, signature wrapping, grad and prom florals, Far East El Paso pickup, and delivery. Se habla español.',
+    'Victoria Boquet Deluxe designs luxury rose ramós and wrapped bouquets in Houston, TX. 25–100 roses, signature wrapping, grad and prom florals, by-appointment pickup, and delivery. Se habla español.',
   keywords: [
-    'Bloomify Boutique',
-    'El Paso florist',
-    'El Paso ramó',
-    'custom rose bouquet El Paso',
-    'graduation flowers El Paso',
-    'prom bouquet El Paso',
-    'Far East El Paso florist',
+    'Victoria Boquet Deluxe',
+    'Houston florist',
+    'Houston ramó',
+    'custom rose bouquet Houston',
+    'graduation flowers Houston',
+    'prom bouquet Houston',
+    'luxury florist Houston',
     'wrapped rose bouquet',
-    'bloomifyboutique',
+    'victoriaboquetdeluxe',
   ],
 };
 
@@ -50,7 +50,7 @@ export function pageMetadata({
           url: '/hero.png',
           width: 1200,
           height: 800,
-          alt: `${COMPANY.name} — custom ramós and wrapped bouquets in El Paso, TX`,
+          alt: `${COMPANY.name} — luxury ramós and wrapped bouquets in Houston, TX`,
         },
       ],
     },
@@ -78,13 +78,13 @@ export function floristJsonLd() {
     address: {
       '@type': 'PostalAddress',
       streetAddress: COMPANY.address,
-      addressLocality: 'El Paso',
+      addressLocality: 'Houston',
       addressRegion: 'TX',
       addressCountry: 'US',
     },
-    areaServed: ['Far East El Paso', 'El Paso', 'Texas'],
-    priceRange: '$110–$300',
-    sameAs: [COMPANY.instagram, COMPANY.jotformUrl].filter(Boolean),
+    areaServed: ['Houston', 'Greater Houston', 'Texas'],
+    priceRange: '$125–$350',
+    sameAs: [COMPANY.instagram].filter(Boolean),
     knowsLanguage: ['en', 'es'],
   };
 }

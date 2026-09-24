@@ -10,27 +10,20 @@ import {
   useTransform,
 } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import { useI18n } from '@/components/i18n/LanguageProvider';
 
 const SLIDE_DURATION_MS = 7000;
 
 const HERO_SLIDES = [
-  {
-    src: '/gallery/gallery-02.png',
-    alt: 'Blush and white rose bouquet with gold-rim wrapping',
-  },
-  {
-    src: '/gallery/gallery-01.png',
-    alt: 'Luxury red rose ramó wrapped in hot-pink paper by Bloomify Boutique',
-  },
-  {
-    src: '/gallery/gallery-05.png',
-    alt: 'Hot-pink rose ramó in translucent wrapping by Bloomify Boutique El Paso',
-  },
+  '/gallery/gallery-02.png',
+  '/gallery/gallery-01.png',
+  '/gallery/gallery-07.png',
 ] as const;
 
 export default function Hero() {
   const ref = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { t } = useI18n();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
@@ -46,7 +39,8 @@ export default function Hero() {
     return () => clearInterval(timer);
   }, []);
 
-  const slide = HERO_SLIDES[currentIndex];
+  const slideSrc = HERO_SLIDES[currentIndex];
+  const slideAlt = t.hero.slides[currentIndex];
 
   return (
     <section
@@ -67,8 +61,8 @@ export default function Hero() {
             }}
           >
             <Image
-              src={slide.src}
-              alt={slide.alt}
+              src={slideSrc}
+              alt={slideAlt}
               fill
               priority={currentIndex === 0}
               className="object-cover object-center"
@@ -87,9 +81,9 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-[#e56b8c] text-xs tracking-[0.4em] uppercase mb-6"
+          className="text-[#C9A46C] text-xs tracking-[0.4em] uppercase mb-6"
         >
-          El Paso Florist · Se habla español
+          {t.hero.eyebrow}
         </motion.p>
 
         <motion.h1
@@ -98,8 +92,8 @@ export default function Hero() {
           transition={{ duration: 0.9, delay: 0.35 }}
           className="font-serif text-white text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] tracking-tight max-w-4xl"
         >
-          Custom Ramós,{' '}
-          <em className="italic text-[#e56b8c]">Wrapped Your Way</em>
+          {t.hero.titleBefore}{' '}
+          <em className="italic text-[#C9A46C]">{t.hero.titleEm}</em>
         </motion.h1>
 
         <motion.p
@@ -108,9 +102,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.55 }}
           className="mt-6 text-white/75 text-base sm:text-lg max-w-xl leading-relaxed"
         >
-          Bloomify Boutique designs custom rose ramós and floral bouquets in El
-          Paso — 25 to 100 roses, signature wrapping, and pickup in Far East El
-          Paso.
+          {t.hero.body}
         </motion.p>
 
         <motion.div
@@ -121,15 +113,15 @@ export default function Hero() {
         >
           <Link
             href="/order"
-            className="px-8 py-3.5 bg-[#e56b8c] text-black text-xs tracking-[0.2em] uppercase font-medium hover:bg-[#d15476] transition-colors duration-200"
+            className="px-8 py-3.5 bg-[#7A2432] text-white text-xs tracking-[0.2em] uppercase font-medium hover:bg-[#5F1C27] transition-colors duration-200"
           >
-            Order a Bouquet
+            {t.hero.order}
           </Link>
           <Link
             href="/pricing"
-            className="px-8 py-3.5 border border-white/50 text-white text-xs tracking-[0.2em] uppercase hover:border-[#e56b8c] hover:text-[#e56b8c] transition-all duration-200"
+            className="px-8 py-3.5 border border-white/50 text-white text-xs tracking-[0.2em] uppercase hover:border-[#C9A46C] hover:text-[#C9A46C] transition-all duration-200"
           >
-            View Pricing
+            {t.hero.pricing}
           </Link>
         </motion.div>
       </motion.div>

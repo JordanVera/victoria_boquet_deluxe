@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ABOUT_CONTENT, COMPANY, STUDIO_HIGHLIGHTS } from '@/lib/data';
+import { useI18n } from '@/components/i18n/LanguageProvider';
 
 const anim = (delay: number) => ({
   initial: { opacity: 0, y: 32 },
@@ -12,17 +12,19 @@ const anim = (delay: number) => ({
 });
 
 export default function Welcome() {
+  const { t } = useI18n();
+
   return (
     <section className="py-24 px-6 lg:px-8 bg-background">
       <div className="max-w-5xl mx-auto">
         <div className="grid md:grid-cols-[1fr_2fr] gap-12 md:gap-16 items-start">
           <motion.div {...anim(0)} className="flex flex-col gap-4">
-            <span className="text-[#e56b8c] text-[10px] tracking-[0.35em] uppercase">
-              Welcome
+            <span className="text-[#7A2432] text-[10px] tracking-[0.35em] uppercase">
+              {t.welcome.eyebrow}
             </span>
-            <div className="h-px w-16 bg-[#e56b8c]" />
+            <div className="h-px w-16 bg-[#7A2432]" />
             <p className="text-xs tracking-[0.2em] uppercase text-foreground/40 mt-4">
-              {COMPANY.serviceArea}
+              {t.company.serviceArea}
             </p>
           </motion.div>
 
@@ -31,32 +33,28 @@ export default function Welcome() {
               {...anim(0.1)}
               className="font-serif text-4xl sm:text-5xl leading-tight text-foreground"
             >
-              El Paso florals with a{' '}
-              <em className="italic text-[#e56b8c]">boutique wrap.</em>
+              {t.welcome.title}{' '}
+              <em className="italic text-[#7A2432]">{t.welcome.titleEm}</em>
             </motion.h2>
             <motion.p
               {...anim(0.2)}
               className="text-foreground/65 leading-relaxed text-base sm:text-lg"
             >
-              {ABOUT_CONTENT.intro} {ABOUT_CONTENT.body}
+              {t.about.intro} {t.about.body}
             </motion.p>
             <motion.p
               {...anim(0.3)}
               className="text-foreground/65 leading-relaxed text-base sm:text-lg"
             >
-              {ABOUT_CONTENT.evolution}
+              {t.about.evolution}
             </motion.p>
             <motion.div
               {...anim(0.4)}
               className="flex gap-8 pt-4 border-t border-border"
             >
-              {[
-                { number: '25–100', label: 'Rose Counts' },
-                { number: '2.5k', label: 'Instagram' },
-                { number: 'ES + EN', label: 'Se habla español' },
-              ].map((stat) => (
+              {t.welcome.stats.map((stat) => (
                 <div key={stat.label}>
-                  <p className="font-serif text-2xl text-[#e56b8c]">
+                  <p className="font-serif text-2xl text-[#7A2432]">
                     {stat.number}
                   </p>
                   <p className="text-xs text-foreground/50 tracking-wide mt-0.5">
@@ -68,16 +66,16 @@ export default function Welcome() {
             <motion.div {...anim(0.5)}>
               <Link
                 href="/about"
-                className="inline-flex items-center text-[#e56b8c] text-xs tracking-[0.2em] uppercase hover:underline underline-offset-4"
+                className="inline-flex items-center text-[#7A2432] text-xs tracking-[0.2em] uppercase hover:underline underline-offset-4"
               >
-                Learn More About Bloomify
+                {t.welcome.learnMore}
               </Link>
             </motion.div>
           </div>
         </div>
 
         <div className="grid sm:grid-cols-2 gap-6 mt-20">
-          {STUDIO_HIGHLIGHTS.map((item, i) => (
+          {t.about.highlights.map((item, i) => (
             <motion.div
               key={item.title}
               {...anim(0.1 * i)}

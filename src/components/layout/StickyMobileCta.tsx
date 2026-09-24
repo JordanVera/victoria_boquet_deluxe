@@ -4,12 +4,14 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { COMPANY } from '@/lib/data';
+import { useI18n } from '@/components/i18n/LanguageProvider';
 
 const HIDDEN_PATHS = new Set(['/order', '/thank-you']);
 
 export default function StickyMobileCta() {
   const pathname = usePathname();
   const [visible, setVisible] = useState(false);
+  const { t } = useI18n();
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 280);
@@ -34,15 +36,15 @@ export default function StickyMobileCta() {
               {COMPANY.shortName}
             </p>
             <p className="truncate text-[10px] tracking-[0.15em] text-white/50 uppercase">
-              El Paso · Order your ramó
+              {t.stickyCta.subtitle}
             </p>
           </div>
           <Link
             href="/order"
             tabIndex={visible ? 0 : -1}
-            className="shrink-0 bg-[#e56b8c] px-5 py-3 text-[10px] font-medium tracking-[0.2em] text-black uppercase transition-colors hover:bg-[#d15476]"
+            className="shrink-0 bg-[#7A2432] px-5 py-3 text-[10px] font-medium tracking-[0.2em] text-white uppercase transition-colors hover:bg-[#5F1C27]"
           >
-            Order Now
+            {t.stickyCta.orderNow}
           </Link>
         </div>
       </div>

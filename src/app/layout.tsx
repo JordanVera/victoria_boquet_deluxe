@@ -4,8 +4,10 @@ import './globals.css';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import StickyMobileCta from '@/components/layout/StickyMobileCta';
+import { LanguageProvider } from '@/components/i18n/LanguageProvider';
 import { COMPANY } from '@/lib/data';
 import { SEO, SITE_URL, floristJsonLd } from '@/lib/seo';
+import { getLocale } from '@/i18n/get-locale';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -49,7 +51,7 @@ export const metadata: Metadata = {
         url: '/hero.png',
         width: 1200,
         height: 800,
-        alt: `${COMPANY.name} — custom ramós and wrapped bouquets in El Paso, TX`,
+        alt: `${COMPANY.name} — custom ramós and wrapped bouquets in Houston, TX`,
       },
     ],
   },
@@ -64,14 +66,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const locale = await getLocale();
+
   return (
     <html
-      lang="en"
+      lang={locale}
       className={`${inter.variable} ${playfair.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
@@ -79,10 +83,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(floristJsonLd()) }}
         />
-        <Navbar />
-        <main className="flex-1 pb-20 sm:pb-0">{children}</main>
-        <Footer />
-        <StickyMobileCta />
+        <LanguageProvider locale={locale}>
+          <Navbar />
+          <main className="flex-1 pb-20 sm:pb-0">{children}</main>
+          <Footer />
+          <StickyMobileCta />
+        </LanguageProvider>
       </body>
     </html>
   );

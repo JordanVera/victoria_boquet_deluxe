@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,21 +10,27 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import type { Dictionary } from "@/i18n";
+import { useI18n } from "@/components/i18n/LanguageProvider";
 
-const schema = z.object({
-  name: z.string().min(2, "Name is required"),
-  email: z.string().email("Valid email required"),
-  phone: z.string().min(7, "Phone number is required"),
-  occasion: z.string().min(1, "Occasion is required"),
-  date: z.string().optional(),
-  message: z.string().min(10, "Please tell us a little more"),
-});
+function createInquirySchema(t: Dictionary) {
+  return z.object({
+    name: z.string().min(2, t.contact.errors.name),
+    email: z.string().email(t.contact.errors.email),
+    phone: z.string().min(7, t.contact.errors.phone),
+    occasion: z.string().min(1, t.contact.errors.occasion),
+    date: z.string().optional(),
+    message: z.string().min(10, t.contact.errors.message),
+  });
+}
 
-type FormValues = z.infer<typeof schema>;
+type FormValues = z.infer<ReturnType<typeof createInquirySchema>>;
 
 export default function InquiryForm() {
   const router = useRouter();
+  const { t } = useI18n();
   const [loading, setLoading] = useState(false);
+  const schema = useMemo(() => createInquirySchema(t), [t]);
 
   const {
     register,
@@ -45,7 +51,7 @@ export default function InquiryForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="grid sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="name">Full Name *</Label>
+          <Label htmlFor="name">{t.contact.fullName}</Label>
           <Input
             id="name"
             placeholder="Jane Smith"
@@ -57,7 +63,7 @@ export default function InquiryForm() {
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="email">Email Address *</Label>
+          <Label htmlFor="email">{t.contact.email}</Label>
           <Input
             id="email"
             type="email"
@@ -73,10 +79,10 @@ export default function InquiryForm() {
 
       <div className="grid sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="phone">Phone Number *</Label>
+          <Label htmlFor="phone">{t.contact.phone}</Label>
           <Input
             id="phone"
-            placeholder="(915) 555-0100"
+            placeholder="(713) 555-0100"
             {...register("phone")}
             className={errors.phone ? "border-destructive" : ""}
           />
@@ -85,10 +91,10 @@ export default function InquiryForm() {
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="occasion">Occasion *</Label>
+          <Label htmlFor="occasion">{t.contact.occasion}</Label>
           <Input
             id="occasion"
-            placeholder="Birthday, grad, prom, proposal..."
+            placeholder={t.contact.occasionPlaceholder}
             {...register("occasion")}
             className={errors.occasion ? "border-destructive" : ""}
           />
@@ -101,16 +107,16 @@ export default function InquiryForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="date">Preferred Date</Label>
+        <Label htmlFor="date">{t.contact.preferredDate}</Label>
         <Input id="date" type="date" {...register("date")} />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="message">How can Bloomify help? *</Label>
+        <Label htmlFor="message">{t.contact.message}</Label>
         <Textarea
           id="message"
           rows={5}
-          placeholder="Ask about colors, wrapping, a custom size, or a last-minute ramó."
+          placeholder={t.contact.messagePlaceholder}
           {...register("message")}
           className={errors.message ? "border-destructive" : ""}
         />
@@ -122,15 +128,15 @@ export default function InquiryForm() {
       <Button
         type="submit"
         disabled={loading}
-        className="w-full bg-[#e56b8c] text-black hover:bg-[#d15476] uppercase tracking-[0.15em] text-xs h-12"
+        className="w-full bg-[#7A2432] text-white hover:bg-[#5F1C27] uppercase tracking-[0.15em] text-xs h-12"
       >
         {loading ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Sending...
+            {t.contact.sending}
           </>
         ) : (
-          "Send Message"
+          t.contact.send
         )}
       </Button>
     </form>

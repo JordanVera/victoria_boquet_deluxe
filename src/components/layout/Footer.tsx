@@ -1,10 +1,15 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin } from 'lucide-react';
 import { NAV_LINKS, COMPANY } from '@/lib/data';
 import SocialLinks from '@/components/layout/SocialLinks';
+import { useI18n } from '@/components/i18n/LanguageProvider';
 
 export default function Footer() {
+  const { t } = useI18n();
+
   return (
     <footer className="bg-black text-white/80">
       <div className="mx-auto max-w-7xl px-6 pt-16 pb-24 sm:pb-8 lg:px-8">
@@ -19,16 +24,13 @@ export default function Footer() {
                 className="h-20 w-auto"
               />
             </Link>
-            <p className="max-w-xs text-sm leading-relaxed">
-              Custom floral designs and rose ramós in El Paso — pickup in Far
-              East El Paso, delivery available. {COMPANY.languages}.
-            </p>
+            <p className="max-w-xs text-sm leading-relaxed">{t.footer.blurb}</p>
             <SocialLinks linkClassName="text-white/80 hover:text-white" />
           </div>
 
           <div>
             <h4 className="mb-6 text-xs tracking-[0.25em] text-white uppercase">
-              Navigation
+              {t.footer.navigation}
             </h4>
             <ul className="flex flex-col gap-3">
               {NAV_LINKS.map((link) => (
@@ -37,7 +39,7 @@ export default function Footer() {
                     href={link.href}
                     className="text-sm transition-colors hover:text-white"
                   >
-                    {link.label}
+                    {t.nav.items[link.id]}
                   </Link>
                 </li>
               ))}
@@ -46,7 +48,7 @@ export default function Footer() {
 
           <div>
             <h4 className="mb-6 text-xs tracking-[0.25em] text-white uppercase">
-              Contact
+              {t.footer.contact}
             </h4>
             <ul className="flex flex-col gap-4 text-sm">
               <li>
@@ -62,7 +64,7 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin size={14} className="mt-0.5 shrink-0 text-white" />
                 <span>
-                  {COMPANY.address}
+                  {t.company.address}
                   <br />
                   {COMPANY.city}
                 </span>
@@ -73,9 +75,9 @@ export default function Footer() {
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-white/20 pt-8 text-xs text-white/60 sm:flex-row">
           <p>
-            © {new Date().getFullYear()} {COMPANY.name}. All Rights Reserved.
+            © {new Date().getFullYear()} {COMPANY.name}. {t.footer.rights}
           </p>
-          <p>{COMPANY.serviceArea}</p>
+          <p>{t.company.serviceArea}</p>
         </div>
       </div>
     </footer>

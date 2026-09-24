@@ -10,7 +10,9 @@ import {
   GALLERY_CATEGORIES,
   type GalleryCategory,
 } from "@/lib/data";
+import { galleryAlt } from "@/i18n/helpers";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/components/i18n/LanguageProvider";
 
 type GalleryGridProps = {
   initialCategory?: GalleryCategory;
@@ -19,6 +21,7 @@ type GalleryGridProps = {
 export default function GalleryGrid({
   initialCategory = "all",
 }: GalleryGridProps) {
+  const { t } = useI18n();
   const [category, setCategory] = useState<GalleryCategory>(initialCategory);
   const [selected, setSelected] = useState<number | null>(null);
 
@@ -26,11 +29,6 @@ export default function GalleryGrid({
     if (category === "all") return GALLERY_IMAGES;
     return GALLERY_IMAGES.filter((img) => img.category === category);
   }, [category]);
-
-  const labelFor = (img: (typeof GALLERY_IMAGES)[number]) => {
-    const match = GALLERY_CATEGORIES.find((c) => c.id === img.category);
-    return match?.label ?? img.category;
-  };
 
   const close = () => setSelected(null);
   const prev = () =>
@@ -54,17 +52,18 @@ export default function GalleryGrid({
             className={cn(
               "px-4 py-2 text-[10px] tracking-[0.2em] uppercase transition-all duration-200 border",
               category === cat.id
-                ? "bg-[#e56b8c] text-black border-[#e56b8c]"
-                : "bg-transparent text-foreground/60 border-border hover:border-[#e56b8c]/50 hover:text-[#e56b8c]",
+                ? "bg-[#7A2432] text-white border-[#7A2432]"
+                : "bg-transparent text-foreground/60 border-border hover:border-[#7A2432]/50 hover:text-[#7A2432]",
             )}
           >
-            {cat.label}
+            {t.gallery.categories[cat.id]}
           </button>
         ))}
       </div>
 
       <p className="text-center text-foreground/40 text-xs tracking-[0.12em] uppercase mb-8">
-        {filtered.length} {filtered.length === 1 ? 'bouquet' : 'bouquets'}
+        {filtered.length}{" "}
+        {filtered.length === 1 ? t.gallery.bouquet : t.gallery.bouquets}
       </p>
 
       <div className="columns-2 md:columns-3 gap-3 space-y-3">
@@ -80,7 +79,7 @@ export default function GalleryGrid({
             <div className="relative overflow-hidden">
               <Image
                 src={img.src}
-                alt={img.alt}
+                alt={galleryAlt(t, img.id)}
                 width={600}
                 height={450}
                 className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
@@ -117,7 +116,7 @@ export default function GalleryGrid({
                   className="fixed inset-0 z-50 flex items-center justify-center p-4"
                 >
                   <Dialog.Title className="sr-only">
-                    {filtered[selected].alt}
+                    {galleryAlt(t, filtered[selected].id)}
                   </Dialog.Title>
                   <Dialog.Close className="absolute top-5 right-5 text-white/60 hover:text-white z-10">
                     <X size={22} />
@@ -127,7 +126,7 @@ export default function GalleryGrid({
                   </button>
                   <Image
                     src={filtered[selected].src}
-                    alt={filtered[selected].alt}
+                    alt={galleryAlt(t, filtered[selected].id)}
                     width={1200}
                     height={900}
                     className="max-w-4xl w-full h-auto object-contain max-h-[80vh]"

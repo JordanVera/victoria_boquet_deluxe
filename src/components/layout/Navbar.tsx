@@ -9,11 +9,14 @@ import { Menu, X } from 'lucide-react';
 import { NAV_LINKS, COMPANY } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import SocialLinks from '@/components/layout/SocialLinks';
+import LanguageToggle from '@/components/i18n/LanguageToggle';
+import { useI18n } from '@/components/i18n/LanguageProvider';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+  const { t } = useI18n();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -69,7 +72,7 @@ export default function Navbar() {
                   isActive ? 'text-white' : 'text-white/80 hover:text-white',
                 )}
               >
-                {link.label}
+                {t.nav.items[link.id]}
                 <span
                   className={cn(
                     'absolute inset-x-3.5 -bottom-0.5 h-px bg-white transition-transform duration-300',
@@ -85,19 +88,20 @@ export default function Navbar() {
 
         <div className="flex items-center gap-1.5">
           <SocialLinks
-            className="mr-2"
+            className="mr-2 hidden sm:flex"
             iconSize={18}
             linkClassName="text-white/80 hover:text-white"
           />
+          <LanguageToggle className="mr-1" />
           <Link
             href="/order"
             className="hidden items-center rounded-full border border-white px-3.5 py-1.5 text-[10px] tracking-[0.2em] uppercase text-white transition-all duration-200 hover:bg-white hover:text-primary sm:inline-flex"
           >
-            Order Now
+            {t.nav.orderNow}
           </Link>
           <button
             type="button"
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            aria-label={mobileOpen ? t.nav.closeMenu : t.nav.openMenu}
             onClick={() => setMobileOpen((value) => !value)}
             className="flex h-9 w-9 items-center justify-center rounded-full text-white lg:hidden"
           >
@@ -137,7 +141,7 @@ export default function Navbar() {
                         : 'text-white/80 hover:text-white',
                     )}
                   >
-                    {link.label}
+                    {t.nav.items[link.id]}
                   </Link>
                 );
               })}
@@ -148,14 +152,14 @@ export default function Navbar() {
                 onClick={() => setMobileOpen(false)}
                 className="rounded-xl bg-white px-4 py-3 text-center text-sm font-semibold tracking-[0.15em] uppercase text-primary"
               >
-                Order a Bouquet
+                {t.nav.orderBouquet}
               </Link>
               <Link
                 href="/contact"
                 onClick={() => setMobileOpen(false)}
                 className="flex items-center justify-center rounded-xl border border-white/40 px-4 py-3 text-center text-sm font-medium text-white"
               >
-                Send a Question
+                {t.nav.sendQuestion}
               </Link>
             </div>
           </motion.div>

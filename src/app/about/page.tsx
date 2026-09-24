@@ -3,24 +3,28 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import CtaStrip from '@/components/home/CtaStrip';
-import TestimonialsSection from '@/components/home/TestimonialsSection';
-import { ABOUT_CONTENT, COMPANY, OWNER, STUDIO_HIGHLIGHTS } from '@/lib/data';
+import { COMPANY, OWNER } from '@/lib/data';
 import { pageMetadata } from '@/lib/seo';
+import { getDictionary } from '@/i18n';
+import { getLocale } from '@/i18n/get-locale';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'El Paso Florist for Custom Ramós & Wrapped Bouquets',
+  title: 'Houston Florist for Custom Ramós & Wrapped Bouquets',
   description:
-    'Bloomify Boutique is an El Paso floral studio for custom rose ramós, signature wrapping, grad and prom bouquets, Far East El Paso pickup, and delivery. Se habla español.',
+    'Victoria Boquet Deluxe is a Houston floral studio for custom rose ramós, signature wrapping, grad and prom bouquets, by-appointment pickup, and delivery. Se habla español.',
   path: '/about',
 });
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const locale = await getLocale();
+  const t = getDictionary(locale);
+
   return (
     <>
       <section className="relative h-64 sm:h-80 overflow-hidden">
         <Image
           src="/gallery/gallery-02.png"
-          alt="Bloomify Boutique custom blush rose bouquet in El Paso"
+          alt={t.about.heroAlt}
           fill
           priority
           className="object-cover object-center"
@@ -28,11 +32,11 @@ export default function AboutPage() {
         />
         <div className="absolute inset-0 bg-black/65" />
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 pt-20">
-          <p className="text-[#e56b8c] text-[10px] tracking-[0.4em] uppercase mb-4">
-            Our Story
+          <p className="text-[#7A2432] text-[10px] tracking-[0.4em] uppercase mb-4">
+            {t.about.eyebrow}
           </p>
           <h1 className="font-serif text-white text-5xl sm:text-6xl">
-            About Bloomify
+            {t.about.title}
           </h1>
         </div>
       </section>
@@ -40,26 +44,22 @@ export default function AboutPage() {
       <section className="py-20 px-6 lg:px-8 max-w-5xl mx-auto">
         <div className="flex flex-col gap-8">
           <h2 className="font-serif text-4xl sm:text-5xl leading-tight text-foreground">
-            Custom florals from{' '}
-            <em className="italic text-[#e56b8c]">Far East El Paso.</em>
+            {t.about.heading}{' '}
+            <em className="italic text-[#7A2432]">{t.about.headingEm}</em>
           </h2>
           <p className="text-foreground/65 text-lg leading-relaxed">
-            {ABOUT_CONTENT.intro}
+            {t.about.intro}
           </p>
           <p className="text-foreground/65 text-lg leading-relaxed">
-            {ABOUT_CONTENT.body}
+            {t.about.body}
           </p>
           <p className="text-foreground/65 text-lg leading-relaxed">
-            {ABOUT_CONTENT.evolution}
+            {t.about.evolution}
           </p>
           <div className="grid sm:grid-cols-3 gap-8 pt-8 border-t border-border">
-            {[
-              { number: '25–100', label: 'Rose ramós' },
-              { number: 'El Paso', label: 'Pickup & delivery' },
-              { number: '2.5k', label: `${COMPANY.instagramHandle}` },
-            ].map((stat) => (
+            {t.about.stats.map((stat) => (
               <div key={stat.label}>
-                <p className="font-serif text-2xl text-[#e56b8c]">
+                <p className="font-serif text-2xl text-[#7A2432]">
                   {stat.number}
                 </p>
                 <p className="text-sm text-foreground/50 mt-1">{stat.label}</p>
@@ -76,7 +76,7 @@ export default function AboutPage() {
             <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] shadow-2xl">
               <Image
                 src={OWNER.image}
-                alt={OWNER.imageAlt}
+                alt={t.about.ownerImageAlt}
                 fill
                 className="object-cover object-top"
                 sizes="(max-width: 1024px) 90vw, 42vw"
@@ -87,22 +87,22 @@ export default function AboutPage() {
 
           <div>
             <p className="text-[10px] tracking-[0.35em] text-primary uppercase">
-              Meet the Owner
+              {t.about.meetOwner}
             </p>
             <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
               {OWNER.name}
             </h2>
             <p className="mt-2 text-sm tracking-[0.18em] text-white/50 uppercase">
-              {OWNER.role}
+              {t.about.ownerRole}
             </p>
             <p className="mt-7 text-base leading-8 text-white/70 sm:text-lg">
-              {OWNER.intro}
+              {t.about.ownerIntro}
             </p>
             <p className="mt-5 text-base leading-8 text-white/70 sm:text-lg">
-              {OWNER.bio}
+              {t.about.ownerBio}
             </p>
             <p className="mt-5 text-base leading-8 text-white/70 sm:text-lg">
-              {OWNER.closing}
+              {t.about.ownerClosing}
             </p>
             <a
               href={COMPANY.instagram}
@@ -110,16 +110,16 @@ export default function AboutPage() {
               rel="noreferrer"
               className="mt-8 inline-flex items-center gap-2 text-xs tracking-[0.2em] text-primary uppercase transition-colors hover:text-primary/80"
             >
-              Follow {COMPANY.instagramHandle}
+              {t.about.follow} {COMPANY.instagramHandle}
               <ArrowRight size={12} />
             </a>
           </div>
         </div>
       </section>
 
-      <section className="py-20 px-6 lg:px-8 bg-[#FBF6F7]">
+      <section className="py-20 px-6 lg:px-8 bg-[#F6F1EA]">
         <div className="max-w-7xl mx-auto grid sm:grid-cols-2 gap-6">
-          {STUDIO_HIGHLIGHTS.map((item) => (
+          {t.about.highlights.map((item) => (
             <div key={item.title} className="bg-white border border-border p-8">
               <h3 className="font-serif text-2xl text-foreground mb-3">
                 {item.title}
@@ -132,14 +132,12 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* <TestimonialsSection /> */}
-
       <section className="py-16 px-6 text-center">
         <Link
           href="/pricing"
-          className="inline-flex items-center gap-2 text-[#e56b8c] text-xs tracking-[0.2em] uppercase hover:gap-3 transition-all"
+          className="inline-flex items-center gap-2 text-[#7A2432] text-xs tracking-[0.2em] uppercase hover:gap-3 transition-all"
         >
-          View Bouquet Pricing <ArrowRight size={12} />
+          {t.about.viewPricing} <ArrowRight size={12} />
         </Link>
       </section>
 

@@ -2,23 +2,26 @@
 
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
-import { REVIEWS, COMPANY } from '@/lib/data';
+import { COMPANY } from '@/lib/data';
+import { useI18n } from '@/components/i18n/LanguageProvider';
 
 export default function TestimonialsSection() {
+  const { t } = useI18n();
+
   return (
-    <section className="py-24 px-6 lg:px-8 bg-[#FBF6F7]">
+    <section className="py-24 px-6 lg:px-8 bg-[#F6F1EA]">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <p className="text-[#e56b8c] text-[10px] tracking-[0.35em] uppercase mb-4">
-            Loved on Instagram
+          <p className="text-[#7A2432] text-[10px] tracking-[0.35em] uppercase mb-4">
+            {t.reviews.lovedOn}
           </p>
           <h2 className="font-serif text-foreground text-4xl sm:text-5xl">
-            What Clients Are Saying
+            {t.reviews.whatClients}
           </h2>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {REVIEWS.slice(0, 3).map((review, i) => (
+          {t.reviews.items.slice(0, 3).map((review, i) => (
             <motion.blockquote
               key={review.id}
               initial={{ opacity: 0, y: 24 }}
@@ -32,7 +35,7 @@ export default function TestimonialsSection() {
                   <Star
                     key={n}
                     size={14}
-                    className="fill-[#e56b8c] text-[#e56b8c]"
+                    className="fill-[#7A2432] text-[#7A2432]"
                   />
                 ))}
               </div>
@@ -56,7 +59,7 @@ export default function TestimonialsSection() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-3.5 border border-border text-foreground/70 text-xs tracking-[0.2em] uppercase hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all"
           >
-            See Mentions on Instagram
+            {t.reviews.seeMentions}
           </a>
         </div>
       </div>

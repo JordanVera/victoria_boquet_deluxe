@@ -12,71 +12,78 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import {
   ADD_ON_OPTIONS,
-  PAYMENT_METHODS,
   ROSE_COLORS,
   ROSE_COUNTS,
   WRAPPING_PAPERS,
+  PAYMENT_METHODS,
 } from "@/lib/data";
+import type { Dictionary } from "@/i18n";
+import { useI18n } from "@/components/i18n/LanguageProvider";
 
-const schema = z
-  .object({
-    firstName: z.string().min(2, "First name is required"),
-    lastName: z.string().min(1, "Last name is required"),
-    phone: z.string().min(7, "Phone number is required"),
-    roseCount: z.enum(["25", "50", "75", "100"], {
-      required_error: "Choose a rose count",
-    }),
-    roseColors: z.array(z.string()).min(1, "Select at least one color"),
-    wrapping: z.string().min(1, "Choose wrapping paper"),
-    addOns: z.array(z.string()).optional(),
-    personalization: z.enum(["banner", "note", "none"]),
-    bannerMessage: z.string().optional(),
-    noteMessage: z.string().optional(),
-    fulfillment: z.enum(["pickup", "delivery"], {
-      required_error: "Choose pickup or delivery",
-    }),
-    deliveryAddress: z.string().optional(),
-    date: z.string().min(1, "Pickup or delivery date is required"),
-    payment: z.string().min(1, "Choose a payment method"),
-    requests: z.string().optional(),
-  })
-  .superRefine((data, ctx) => {
-    const count = ROSE_COUNTS.find((item) => item.id === data.roseCount);
-    if (count && data.roseColors.length > count.colors) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["roseColors"],
-        message: `${count.label} includes up to ${count.colors} color${count.colors === 1 ? "" : "s"}`,
-      });
-    }
-    if (data.personalization === "banner" && !data.bannerMessage?.trim()) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["bannerMessage"],
-        message: "Add a banner message",
-      });
-    }
-    if (data.personalization === "note" && !data.noteMessage?.trim()) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["noteMessage"],
-        message: "Add a note message",
-      });
-    }
-    if (data.fulfillment === "delivery" && !data.deliveryAddress?.trim()) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["deliveryAddress"],
-        message: "Delivery address is required",
-      });
-    }
-  });
+function createOrderSchema(t: Dictionary) {
+  return z
+    .object({
+      firstName: z.string().min(2, t.order.errors.firstName),
+      lastName: z.string().min(1, t.order.errors.lastName),
+      phone: z.string().min(7, t.order.errors.phone),
+      roseCount: z.enum(["25", "50", "75", "100"], {
+        required_error: t.order.errors.roseCount,
+      }),
+      roseColors: z.array(z.string()).min(1, t.order.errors.roseColors),
+      wrapping: z.string().min(1, t.order.errors.wrapping),
+      addOns: z.array(z.string()).optional(),
+      personalization: z.enum(["banner", "note", "none"]),
+      bannerMessage: z.string().optional(),
+      noteMessage: z.string().optional(),
+      fulfillment: z.enum(["pickup", "delivery"], {
+        required_error: t.order.errors.fulfillment,
+      }),
+      deliveryAddress: z.string().optional(),
+      date: z.string().min(1, t.order.errors.date),
+      payment: z.string().min(1, t.order.errors.payment),
+      requests: z.string().optional(),
+    })
+    .superRefine((data, ctx) => {
+      const count = ROSE_COUNTS.find((item) => item.id === data.roseCount);
+      if (count && data.roseColors.length > count.colors) {
+        const label = t.order.roseCounts[count.id].label;
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["roseColors"],
+          message: t.order.errors.colorLimit(label, count.colors),
+        });
+      }
+      if (data.personalization === "banner" && !data.bannerMessage?.trim()) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["bannerMessage"],
+          message: t.order.errors.banner,
+        });
+      }
+      if (data.personalization === "note" && !data.noteMessage?.trim()) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["noteMessage"],
+          message: t.order.errors.note,
+        });
+      }
+      if (data.fulfillment === "delivery" && !data.deliveryAddress?.trim()) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["deliveryAddress"],
+          message: t.order.errors.deliveryAddress,
+        });
+      }
+    });
+}
 
-type FormValues = z.infer<typeof schema>;
+type FormValues = z.infer<ReturnType<typeof createOrderSchema>>;
 
 export default function OrderForm() {
   const router = useRouter();
+  const { t } = useI18n();
   const [loading, setLoading] = useState(false);
+  const schema = useMemo(() => createOrderSchema(t), [t]);
 
   const {
     register,
@@ -103,8 +110,8 @@ export default function OrderForm() {
   const selectedCount = ROSE_COUNTS.find((item) => item.id === roseCount);
 
   const estimatedTotal = useMemo(() => {
-    return selectedCount ? `$${selectedCount.price}+` : "Select a size";
-  }, [selectedCount]);
+    return selectedCount ? `$${selectedCount.price}+` : t.order.selectSize;
+  }, [selectedCount, t.order.selectSize]);
 
   const toggleValue = (
     field: "roseColors" | "addOns",
@@ -128,11 +135,11 @@ export default function OrderForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
       <fieldset className="space-y-4">
         <legend className="font-serif text-2xl text-foreground mb-2">
-          Your Details
+          {t.order.detailsLegend}
         </legend>
         <div className="grid sm:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="firstName">First Name *</Label>
+            <Label htmlFor="firstName">{t.order.firstName}</Label>
             <Input
               id="firstName"
               placeholder="Alejandra"
@@ -146,7 +153,7 @@ export default function OrderForm() {
             )}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="lastName">Last Name *</Label>
+            <Label htmlFor="lastName">{t.order.lastName}</Label>
             <Input
               id="lastName"
               placeholder="Martinez"
@@ -161,10 +168,10 @@ export default function OrderForm() {
           </div>
         </div>
         <div className="space-y-2">
-          <Label htmlFor="phone">Phone Number *</Label>
+          <Label htmlFor="phone">{t.order.phone}</Label>
           <Input
             id="phone"
-            placeholder="(915) 000-0000"
+            placeholder="(713) 000-0000"
             {...register("phone")}
             className={errors.phone ? "border-destructive" : ""}
           />
@@ -176,48 +183,51 @@ export default function OrderForm() {
 
       <fieldset className="space-y-4">
         <legend className="font-serif text-2xl text-foreground mb-2">
-          Bouquet Details
+          {t.order.bouquetLegend}
         </legend>
         <p className="text-sm text-foreground/55">
-          Estimated bouquet total:{" "}
+          {t.order.estimated}{" "}
           <span className="text-foreground font-medium">{estimatedTotal}</span>{" "}
-          before add-ons and delivery.
+          {t.order.beforeAddOns}
         </p>
         <div className="grid sm:grid-cols-2 gap-3">
-          {ROSE_COUNTS.map((count) => (
-            <label
-              key={count.id}
-              className={`flex cursor-pointer items-start gap-3 border p-4 text-sm transition-colors ${
-                roseCount === count.id
-                  ? "border-[#e56b8c] bg-[#FBF6F7]"
-                  : "border-border hover:border-[#e56b8c]/40"
-              }`}
-            >
-              <input
-                type="radio"
-                value={count.id}
-                {...register("roseCount")}
-                className="mt-1 accent-[#e56b8c]"
-              />
-              <span>
-                <span className="block font-medium text-foreground">
-                  {count.label} — ${count.price}
+          {ROSE_COUNTS.map((count) => {
+            const copy = t.order.roseCounts[count.id];
+            return (
+              <label
+                key={count.id}
+                className={`flex cursor-pointer items-start gap-3 border p-4 text-sm transition-colors ${
+                  roseCount === count.id
+                    ? "border-[#7A2432] bg-[#F6F1EA]"
+                    : "border-border hover:border-[#7A2432]/40"
+                }`}
+              >
+                <input
+                  type="radio"
+                  value={count.id}
+                  {...register("roseCount")}
+                  className="mt-1 accent-[#7A2432]"
+                />
+                <span>
+                  <span className="block font-medium text-foreground">
+                    {copy.label} — ${count.price}
+                  </span>
+                  <span className="text-foreground/50">{copy.note}</span>
                 </span>
-                <span className="text-foreground/50">{count.note}</span>
-              </span>
-            </label>
-          ))}
+              </label>
+            );
+          })}
         </div>
         {errors.roseCount && (
           <p className="text-destructive text-xs">{errors.roseCount.message}</p>
         )}
 
         <div className="space-y-2">
-          <Label>Rose Color *</Label>
+          <Label>{t.order.roseColor}</Label>
           <p className="text-xs text-foreground/45">
             {selectedCount
-              ? `Select up to ${selectedCount.colors} color${selectedCount.colors === 1 ? "" : "s"} for this size.`
-              : "Choose a rose count first, then pick colors."}
+              ? `${t.order.selectUpTo} ${selectedCount.colors} ${selectedCount.colors === 1 ? t.order.color : t.order.colors} ${t.order.forThisSize}`
+              : t.order.chooseCountFirst}
           </p>
           <div className="flex flex-wrap gap-2">
             {ROSE_COLORS.map((color) => {
@@ -229,11 +239,11 @@ export default function OrderForm() {
                   onClick={() => toggleValue("roseColors", color, roseColors)}
                   className={`rounded-full border px-4 py-2 text-xs tracking-[0.12em] uppercase transition-colors ${
                     checked
-                      ? "border-[#e56b8c] bg-[#e56b8c] text-black"
-                      : "border-border text-foreground/70 hover:border-[#e56b8c]/50"
+                      ? "border-[#7A2432] bg-[#7A2432] text-white"
+                      : "border-border text-foreground/70 hover:border-[#7A2432]/50"
                   }`}
                 >
-                  {color}
+                  {t.order.roseColors[color]}
                 </button>
               );
             })}
@@ -246,16 +256,16 @@ export default function OrderForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="wrapping">Wrapping Paper *</Label>
+          <Label htmlFor="wrapping">{t.order.wrapping}</Label>
           <select
             id="wrapping"
             {...register("wrapping")}
             className="flex h-10 w-full border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           >
-            <option value="">Please select</option>
+            <option value="">{t.order.pleaseSelect}</option>
             {WRAPPING_PAPERS.map((paper) => (
               <option key={paper} value={paper}>
-                {paper}
+                {t.order.wrappingPapers[paper]}
               </option>
             ))}
           </select>
@@ -267,28 +277,29 @@ export default function OrderForm() {
 
       <fieldset className="space-y-4">
         <legend className="font-serif text-2xl text-foreground mb-2">
-          Add-Ons
+          {t.order.addOnsLegend}
         </legend>
         <div className="grid sm:grid-cols-2 gap-3">
           {ADD_ON_OPTIONS.map((addon) => {
             const checked = addOns.includes(addon.id);
+            const copy = t.order.addOnOptions[addon.id];
             return (
               <label
                 key={addon.id}
                 className={`flex cursor-pointer items-start gap-3 border p-4 text-sm ${
-                  checked ? "border-[#e56b8c] bg-[#FBF6F7]" : "border-border"
+                  checked ? "border-[#7A2432] bg-[#F6F1EA]" : "border-border"
                 }`}
               >
                 <input
                   type="checkbox"
                   checked={checked}
                   onChange={() => toggleValue("addOns", addon.id, addOns)}
-                  className="mt-1 accent-[#e56b8c]"
+                  className="mt-1 accent-[#7A2432]"
                 />
                 <span>
-                  <span className="block text-foreground">{addon.label}</span>
-                  {addon.note ? (
-                    <span className="text-foreground/45">{addon.note}</span>
+                  <span className="block text-foreground">{copy.label}</span>
+                  {copy.note ? (
+                    <span className="text-foreground/45">{copy.note}</span>
                   ) : null}
                 </span>
               </label>
@@ -299,22 +310,22 @@ export default function OrderForm() {
 
       <fieldset className="space-y-4">
         <legend className="font-serif text-2xl text-foreground mb-2">
-          Personalization
+          {t.order.personalizationLegend}
         </legend>
         <p className="text-sm text-foreground/55">
-          Choose a message banner, a custom note, or skip this step.
+          {t.order.personalizationHelp}
         </p>
         <div className="grid sm:grid-cols-3 gap-3">
           {[
-            { id: "banner", label: "Banner" },
-            { id: "note", label: "Custom note" },
-            { id: "none", label: "No message" },
+            { id: "banner", label: t.order.banner },
+            { id: "note", label: t.order.customNote },
+            { id: "none", label: t.order.noMessage },
           ].map((option) => (
             <label
               key={option.id}
               className={`flex cursor-pointer items-center gap-3 border p-4 text-sm ${
                 personalization === option.id
-                  ? "border-[#e56b8c] bg-[#FBF6F7]"
+                  ? "border-[#7A2432] bg-[#F6F1EA]"
                   : "border-border"
               }`}
             >
@@ -322,7 +333,7 @@ export default function OrderForm() {
                 type="radio"
                 value={option.id}
                 {...register("personalization")}
-                className="accent-[#e56b8c]"
+                className="accent-[#7A2432]"
               />
               {option.label}
             </label>
@@ -330,7 +341,7 @@ export default function OrderForm() {
         </div>
         {personalization === "banner" ? (
           <div className="space-y-2">
-            <Label htmlFor="bannerMessage">Message for banner</Label>
+            <Label htmlFor="bannerMessage">{t.order.bannerMessage}</Label>
             <Input id="bannerMessage" {...register("bannerMessage")} />
             {errors.bannerMessage && (
               <p className="text-destructive text-xs">
@@ -341,7 +352,7 @@ export default function OrderForm() {
         ) : null}
         {personalization === "note" ? (
           <div className="space-y-2">
-            <Label htmlFor="noteMessage">Message for note</Label>
+            <Label htmlFor="noteMessage">{t.order.noteMessage}</Label>
             <Textarea id="noteMessage" rows={3} {...register("noteMessage")} />
             {errors.noteMessage && (
               <p className="text-destructive text-xs">
@@ -354,13 +365,13 @@ export default function OrderForm() {
 
       <fieldset className="space-y-4">
         <legend className="font-serif text-2xl text-foreground mb-2">
-          Pickup or Delivery
+          {t.order.fulfillmentLegend}
         </legend>
         <div className="grid sm:grid-cols-2 gap-3">
           <label
             className={`flex cursor-pointer items-start gap-3 border p-4 text-sm ${
               fulfillment === "pickup"
-                ? "border-[#e56b8c] bg-[#FBF6F7]"
+                ? "border-[#7A2432] bg-[#F6F1EA]"
                 : "border-border"
             }`}
           >
@@ -368,17 +379,17 @@ export default function OrderForm() {
               type="radio"
               value="pickup"
               {...register("fulfillment")}
-              className="mt-1 accent-[#e56b8c]"
+              className="mt-1 accent-[#7A2432]"
             />
             <span>
-              <span className="block font-medium">Pickup</span>
-              <span className="text-foreground/50">Far East El Paso</span>
+              <span className="block font-medium">{t.order.pickup}</span>
+              <span className="text-foreground/50">{t.order.byAppointment}</span>
             </span>
           </label>
           <label
             className={`flex cursor-pointer items-start gap-3 border p-4 text-sm ${
               fulfillment === "delivery"
-                ? "border-[#e56b8c] bg-[#FBF6F7]"
+                ? "border-[#7A2432] bg-[#F6F1EA]"
                 : "border-border"
             }`}
           >
@@ -386,20 +397,20 @@ export default function OrderForm() {
               type="radio"
               value="delivery"
               {...register("fulfillment")}
-              className="mt-1 accent-[#e56b8c]"
+              className="mt-1 accent-[#7A2432]"
             />
             <span>
-              <span className="block font-medium">Delivery</span>
-              <span className="text-foreground/50">Fee applies</span>
+              <span className="block font-medium">{t.order.delivery}</span>
+              <span className="text-foreground/50">{t.order.feeApplies}</span>
             </span>
           </label>
         </div>
         {fulfillment === "delivery" ? (
           <div className="space-y-2">
-            <Label htmlFor="deliveryAddress">Delivery Address *</Label>
+            <Label htmlFor="deliveryAddress">{t.order.deliveryAddress}</Label>
             <Input
               id="deliveryAddress"
-              placeholder="Street, El Paso, TX"
+              placeholder={t.order.deliveryPlaceholder}
               {...register("deliveryAddress")}
             />
             {errors.deliveryAddress && (
@@ -410,7 +421,7 @@ export default function OrderForm() {
           </div>
         ) : null}
         <div className="space-y-2">
-          <Label htmlFor="date">Pickup / Delivery Date *</Label>
+          <Label htmlFor="date">{t.order.date}</Label>
           <Input id="date" type="date" {...register("date")} />
           {errors.date && (
             <p className="text-destructive text-xs">{errors.date.message}</p>
@@ -420,16 +431,16 @@ export default function OrderForm() {
 
       <fieldset className="space-y-4">
         <legend className="font-serif text-2xl text-foreground mb-2">
-          Payment & Notes
+          {t.order.paymentLegend}
         </legend>
         <div className="space-y-2">
-          <Label htmlFor="payment">Preferred payment method *</Label>
+          <Label htmlFor="payment">{t.order.payment}</Label>
           <select
             id="payment"
             {...register("payment")}
             className="flex h-10 w-full border border-input bg-transparent px-3 py-1 text-sm shadow-xs"
           >
-            <option value="">Please select</option>
+            <option value="">{t.order.pleaseSelect}</option>
             {PAYMENT_METHODS.map((method) => (
               <option key={method} value={method}>
                 {method}
@@ -441,42 +452,37 @@ export default function OrderForm() {
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="requests">
-            Special requests, inspo, or extra details
-          </Label>
+          <Label htmlFor="requests">{t.order.requests}</Label>
           <Textarea
             id="requests"
             rows={5}
-            placeholder="Share color notes, occasion, or anything you want included."
+            placeholder={t.order.requestsPlaceholder}
             {...register("requests")}
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="inspo">Inspiration photo</Label>
+          <Label htmlFor="inspo">{t.order.inspo}</Label>
           <Input id="inspo" type="file" accept="image/*" />
-          <p className="text-xs text-foreground/45">
-            Optional. Final design may vary based on availability.
-          </p>
+          <p className="text-xs text-foreground/45">{t.order.inspoHelp}</p>
         </div>
       </fieldset>
 
       <p className="text-sm text-foreground/55 leading-relaxed">
-        After you submit, Bloomify will review the order, confirm details, and
-        send 50% deposit information to place it.
+        {t.order.afterSubmit}
       </p>
 
       <Button
         type="submit"
         disabled={loading}
-        className="w-full bg-[#e56b8c] text-black hover:bg-[#d15476] uppercase tracking-[0.15em] text-xs h-12 rounded-none"
+        className="w-full bg-[#7A2432] text-white hover:bg-[#5F1C27] uppercase tracking-[0.15em] text-xs h-12 rounded-none"
       >
         {loading ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Sending...
+            {t.order.sending}
           </>
         ) : (
-          "Submit Bouquet Order"
+          t.order.submit
         )}
       </Button>
     </form>
