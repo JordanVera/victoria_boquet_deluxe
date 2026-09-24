@@ -8,7 +8,7 @@ export const COMPANY = {
   address: 'By Appointment',
   city: 'Houston, TX',
   serviceArea: 'Houston · Pickup & Delivery',
-  instagram: 'https://www.instagram.com/victoria_boquet_deluxe/',
+  instagram: 'https://www.instagram.com/victoria_bouquet_deluxe/',
   instagramHandle: '@victoriaboquetdeluxe',
   facebook: '',
   website: 'https://victoriaboquetdeluxe.com',
@@ -20,8 +20,8 @@ export const COMPANY = {
   languages: 'Se habla español',
 };
 
-export const ACCENT = '#7A2432';
-export const ACCENT_HOVER = '#5F1C27';
+export const ACCENT = '#e56b8c';
+export const ACCENT_HOVER = '#c94f71';
 
 export const NAV_LINKS = [
   { id: 'home', href: '/' },
