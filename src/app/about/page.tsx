@@ -32,7 +32,7 @@ export default async function AboutPage() {
         />
         <div className="absolute inset-0 bg-black/65" />
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 pt-20">
-          <p className="text-[#7A2432] text-[10px] tracking-[0.4em] uppercase mb-4">
+          <p className="text-[#e56b8c] text-[10px] tracking-[0.4em] uppercase mb-4">
             {t.about.eyebrow}
           </p>
           <h1 className="font-serif text-white text-5xl sm:text-6xl">
@@ -45,7 +45,7 @@ export default async function AboutPage() {
         <div className="flex flex-col gap-8">
           <h2 className="font-serif text-4xl sm:text-5xl leading-tight text-foreground">
             {t.about.heading}{' '}
-            <em className="italic text-[#7A2432]">{t.about.headingEm}</em>
+            <em className="italic text-[#e56b8c]">{t.about.headingEm}</em>
           </h2>
           <p className="text-foreground/65 text-lg leading-relaxed">
             {t.about.intro}
@@ -59,7 +59,7 @@ export default async function AboutPage() {
           <div className="grid sm:grid-cols-3 gap-8 pt-8 border-t border-border">
             {t.about.stats.map((stat) => (
               <div key={stat.label}>
-                <p className="font-serif text-2xl text-[#7A2432]">
+                <p className="font-serif text-2xl text-[#e56b8c]">
                   {stat.number}
                 </p>
                 <p className="text-sm text-foreground/50 mt-1">{stat.label}</p>
@@ -117,7 +117,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="py-20 px-6 lg:px-8 bg-[#F6F1EA]">
+      <section className="py-20 px-6 lg:px-8 bg-[#fbf0f3]">
         <div className="max-w-7xl mx-auto grid sm:grid-cols-2 gap-6">
           {t.about.highlights.map((item) => (
             <div key={item.title} className="bg-white border border-border p-8">
@@ -135,7 +135,7 @@ export default async function AboutPage() {
       <section className="py-16 px-6 text-center">
         <Link
           href="/pricing"
-          className="inline-flex items-center gap-2 text-[#7A2432] text-xs tracking-[0.2em] uppercase hover:gap-3 transition-all"
+          className="inline-flex items-center gap-2 text-[#e56b8c] text-xs tracking-[0.2em] uppercase hover:gap-3 transition-all"
         >
           {t.about.viewPricing} <ArrowRight size={12} />
         </Link>

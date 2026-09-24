@@ -29,7 +29,7 @@ export default async function PricingPage() {
         />
         <div className="absolute inset-0 bg-black/65" />
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 pt-20">
-          <p className="text-[#7A2432] text-[10px] tracking-[0.4em] uppercase mb-4">
+          <p className="text-[#e56b8c] text-[10px] tracking-[0.4em] uppercase mb-4">
             {t.pricing.eyebrow}
           </p>
           <h1 className="font-serif text-white text-5xl sm:text-6xl">

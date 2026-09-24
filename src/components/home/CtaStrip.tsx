@@ -24,7 +24,7 @@ export default function CtaStrip() {
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-4 text-[10px] tracking-[0.4em] text-[#C9A46C] uppercase"
+          className="mb-4 text-[10px] tracking-[0.4em] text-[#f3c4ce] uppercase"
         >
           {t.cta.eyebrow}
         </motion.p>
@@ -55,7 +55,7 @@ export default function CtaStrip() {
         >
           <Link
             href="/order"
-            className="bg-[#7A2432] px-8 py-3.5 text-xs tracking-[0.2em] text-white uppercase transition-colors duration-200 hover:bg-[#5F1C27]"
+            className="bg-[#e56b8c] px-8 py-3.5 text-xs tracking-[0.2em] text-white uppercase transition-colors duration-200 hover:bg-[#c94f71]"
           >
             {t.cta.startOrder}
           </Link>
@@ -63,7 +63,7 @@ export default function CtaStrip() {
             href={COMPANY.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 border border-white/50 px-8 py-3.5 text-xs tracking-[0.2em] text-white uppercase transition-all duration-200 hover:border-[#C9A46C] hover:text-[#C9A46C]"
+            className="inline-flex items-center justify-center gap-2 border border-white/50 px-8 py-3.5 text-xs tracking-[0.2em] text-white uppercase transition-all duration-200 hover:border-[#f3c4ce] hover:text-[#f3c4ce]"
           >
             {COMPANY.instagramHandle}
           </a>

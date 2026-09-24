@@ -17,7 +17,7 @@ export default function PricingPreview() {
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-[#C9A46C] text-[10px] tracking-[0.35em] uppercase mb-4"
+            className="text-[#f3c4ce] text-[10px] tracking-[0.35em] uppercase mb-4"
           >
             {t.pricing.previewEyebrow}
           </motion.p>
@@ -40,7 +40,7 @@ export default function PricingPreview() {
             {t.pricing.previewBody}{' '}
             <Link
               href="/order"
-              className="text-[#C9A46C] underline-offset-4 transition-colors hover:text-[#E2C48A] hover:underline"
+              className="text-[#f3c4ce] underline-offset-4 transition-colors hover:text-[#f8d7de] hover:underline"
             >
               {t.pricing.orderOnline}
             </Link>
@@ -60,16 +60,16 @@ export default function PricingPreview() {
                 transition={{ duration: 0.7, delay: i * 0.12 }}
                 className={`relative flex flex-col border p-7 ${
                   pkg.highlighted
-                    ? 'border-[#7A2432] bg-[#161410]'
+                    ? 'border-[#e56b8c] bg-[#161410]'
                     : 'border-white/10 bg-[#161410]'
                 }`}
               >
                 {pkg.highlighted ? (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#7A2432] px-4 py-1 text-[10px] tracking-[0.2em] uppercase text-white">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#e56b8c] px-4 py-1 text-[10px] tracking-[0.2em] uppercase text-white">
                     {t.pricing.mostPopular}
                   </span>
                 ) : null}
-                <p className="text-[#C9A46C] text-[10px] tracking-[0.3em] uppercase">
+                <p className="text-[#f3c4ce] text-[10px] tracking-[0.3em] uppercase">
                   {copy.name}
                 </p>
                 <p className="font-serif text-4xl text-white mt-3">{pkg.price}</p>
@@ -89,7 +89,7 @@ export default function PricingPreview() {
                     >
                       <Check
                         size={14}
-                        className="text-[#C9A46C] flex-shrink-0 mt-0.5"
+                        className="text-[#f3c4ce] flex-shrink-0 mt-0.5"
                       />
                       {feature}
                     </li>
@@ -97,7 +97,7 @@ export default function PricingPreview() {
                 </ul>
                 <Link
                   href="/pricing"
-                  className="inline-flex items-center gap-2 text-[#C9A46C] text-xs tracking-[0.2em] uppercase hover:gap-3 transition-all"
+                  className="inline-flex items-center gap-2 text-[#f3c4ce] text-xs tracking-[0.2em] uppercase hover:gap-3 transition-all"
                 >
                   {t.pricing.viewDetails} <ArrowRight size={12} />
                 </Link>
@@ -109,7 +109,7 @@ export default function PricingPreview() {
         <div className="mt-12 text-center">
           <Link
             href="/pricing"
-            className="inline-flex px-8 py-3.5 border border-[#C9A46C] text-[#C9A46C] text-xs tracking-[0.2em] uppercase hover:bg-[#C9A46C] hover:text-black transition-colors duration-200"
+            className="inline-flex px-8 py-3.5 border border-[#f3c4ce] text-[#f3c4ce] text-xs tracking-[0.2em] uppercase hover:bg-[#f3c4ce] hover:text-black transition-colors duration-200"
           >
             {t.pricing.seeFull}
           </Link>

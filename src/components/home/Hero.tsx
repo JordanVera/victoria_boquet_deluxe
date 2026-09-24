@@ -81,7 +81,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-[#C9A46C] text-xs tracking-[0.4em] uppercase mb-6"
+          className="text-[#f3c4ce] text-xs tracking-[0.4em] uppercase mb-6"
         >
           {t.hero.eyebrow}
         </motion.p>
@@ -93,7 +93,7 @@ export default function Hero() {
           className="font-serif text-white text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] tracking-tight max-w-4xl"
         >
           {t.hero.titleBefore}{' '}
-          <em className="italic text-[#C9A46C]">{t.hero.titleEm}</em>
+          <em className="italic text-[#f3c4ce]">{t.hero.titleEm}</em>
         </motion.h1>
 
         <motion.p
@@ -113,13 +113,13 @@ export default function Hero() {
         >
           <Link
             href="/order"
-            className="px-8 py-3.5 bg-[#7A2432] text-white text-xs tracking-[0.2em] uppercase font-medium hover:bg-[#5F1C27] transition-colors duration-200"
+            className="px-8 py-3.5 bg-[#e56b8c] text-white text-xs tracking-[0.2em] uppercase font-medium hover:bg-[#c94f71] transition-colors duration-200"
           >
             {t.hero.order}
           </Link>
           <Link
             href="/pricing"
-            className="px-8 py-3.5 border border-white/50 text-white text-xs tracking-[0.2em] uppercase hover:border-[#C9A46C] hover:text-[#C9A46C] transition-all duration-200"
+            className="px-8 py-3.5 border border-white/50 text-white text-xs tracking-[0.2em] uppercase hover:border-[#f3c4ce] hover:text-[#f3c4ce] transition-all duration-200"
           >
             {t.hero.pricing}
           </Link>

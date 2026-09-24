@@ -198,15 +198,15 @@ export default function OrderForm() {
                 key={count.id}
                 className={`flex cursor-pointer items-start gap-3 border p-4 text-sm transition-colors ${
                   roseCount === count.id
-                    ? "border-[#7A2432] bg-[#F6F1EA]"
-                    : "border-border hover:border-[#7A2432]/40"
+                    ? "border-[#e56b8c] bg-[#fbf0f3]"
+                    : "border-border hover:border-[#e56b8c]/40"
                 }`}
               >
                 <input
                   type="radio"
                   value={count.id}
                   {...register("roseCount")}
-                  className="mt-1 accent-[#7A2432]"
+                  className="mt-1 accent-[#e56b8c]"
                 />
                 <span>
                   <span className="block font-medium text-foreground">
@@ -239,8 +239,8 @@ export default function OrderForm() {
                   onClick={() => toggleValue("roseColors", color, roseColors)}
                   className={`rounded-full border px-4 py-2 text-xs tracking-[0.12em] uppercase transition-colors ${
                     checked
-                      ? "border-[#7A2432] bg-[#7A2432] text-white"
-                      : "border-border text-foreground/70 hover:border-[#7A2432]/50"
+                      ? "border-[#e56b8c] bg-[#e56b8c] text-white"
+                      : "border-border text-foreground/70 hover:border-[#e56b8c]/50"
                   }`}
                 >
                   {t.order.roseColors[color]}
@@ -287,14 +287,14 @@ export default function OrderForm() {
               <label
                 key={addon.id}
                 className={`flex cursor-pointer items-start gap-3 border p-4 text-sm ${
-                  checked ? "border-[#7A2432] bg-[#F6F1EA]" : "border-border"
+                  checked ? "border-[#e56b8c] bg-[#fbf0f3]" : "border-border"
                 }`}
               >
                 <input
                   type="checkbox"
                   checked={checked}
                   onChange={() => toggleValue("addOns", addon.id, addOns)}
-                  className="mt-1 accent-[#7A2432]"
+                  className="mt-1 accent-[#e56b8c]"
                 />
                 <span>
                   <span className="block text-foreground">{copy.label}</span>
@@ -325,7 +325,7 @@ export default function OrderForm() {
               key={option.id}
               className={`flex cursor-pointer items-center gap-3 border p-4 text-sm ${
                 personalization === option.id
-                  ? "border-[#7A2432] bg-[#F6F1EA]"
+                  ? "border-[#e56b8c] bg-[#fbf0f3]"
                   : "border-border"
               }`}
             >
@@ -333,7 +333,7 @@ export default function OrderForm() {
                 type="radio"
                 value={option.id}
                 {...register("personalization")}
-                className="accent-[#7A2432]"
+                className="accent-[#e56b8c]"
               />
               {option.label}
             </label>
@@ -371,7 +371,7 @@ export default function OrderForm() {
           <label
             className={`flex cursor-pointer items-start gap-3 border p-4 text-sm ${
               fulfillment === "pickup"
-                ? "border-[#7A2432] bg-[#F6F1EA]"
+                ? "border-[#e56b8c] bg-[#fbf0f3]"
                 : "border-border"
             }`}
           >
@@ -379,7 +379,7 @@ export default function OrderForm() {
               type="radio"
               value="pickup"
               {...register("fulfillment")}
-              className="mt-1 accent-[#7A2432]"
+              className="mt-1 accent-[#e56b8c]"
             />
             <span>
               <span className="block font-medium">{t.order.pickup}</span>
@@ -389,7 +389,7 @@ export default function OrderForm() {
           <label
             className={`flex cursor-pointer items-start gap-3 border p-4 text-sm ${
               fulfillment === "delivery"
-                ? "border-[#7A2432] bg-[#F6F1EA]"
+                ? "border-[#e56b8c] bg-[#fbf0f3]"
                 : "border-border"
             }`}
           >
@@ -397,7 +397,7 @@ export default function OrderForm() {
               type="radio"
               value="delivery"
               {...register("fulfillment")}
-              className="mt-1 accent-[#7A2432]"
+              className="mt-1 accent-[#e56b8c]"
             />
             <span>
               <span className="block font-medium">{t.order.delivery}</span>
@@ -474,7 +474,7 @@ export default function OrderForm() {
       <Button
         type="submit"
         disabled={loading}
-        className="w-full bg-[#7A2432] text-white hover:bg-[#5F1C27] uppercase tracking-[0.15em] text-xs h-12 rounded-none"
+        className="w-full bg-[#e56b8c] text-white hover:bg-[#c94f71] uppercase tracking-[0.15em] text-xs h-12 rounded-none"
       >
         {loading ? (
           <>

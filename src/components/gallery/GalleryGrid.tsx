@@ -52,8 +52,8 @@ export default function GalleryGrid({
             className={cn(
               "px-4 py-2 text-[10px] tracking-[0.2em] uppercase transition-all duration-200 border",
               category === cat.id
-                ? "bg-[#7A2432] text-white border-[#7A2432]"
-                : "bg-transparent text-foreground/60 border-border hover:border-[#7A2432]/50 hover:text-[#7A2432]",
+                ? "bg-[#e56b8c] text-white border-[#e56b8c]"
+                : "bg-transparent text-foreground/60 border-border hover:border-[#e56b8c]/50 hover:text-[#e56b8c]",
             )}
           >
             {t.gallery.categories[cat.id]}

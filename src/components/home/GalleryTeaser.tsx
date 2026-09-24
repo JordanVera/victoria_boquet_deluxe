@@ -23,7 +23,7 @@ export default function GalleryTeaser() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-[#7A2432] text-[10px] tracking-[0.35em] uppercase mb-3"
+              className="text-[#e56b8c] text-[10px] tracking-[0.35em] uppercase mb-3"
             >
               {t.gallery.teaserEyebrow}
             </motion.p>
@@ -39,7 +39,7 @@ export default function GalleryTeaser() {
           </div>
           <Link
             href="/gallery"
-            className="inline-flex items-center gap-2 text-[#7A2432] text-xs tracking-[0.2em] uppercase hover:gap-3 transition-all duration-200"
+            className="inline-flex items-center gap-2 text-[#e56b8c] text-xs tracking-[0.2em] uppercase hover:gap-3 transition-all duration-200"
           >
             {t.gallery.viewAll} <ArrowRight size={12} />
           </Link>

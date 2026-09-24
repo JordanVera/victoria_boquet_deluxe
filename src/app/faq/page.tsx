@@ -48,7 +48,7 @@ export default async function FaqPage() {
         />
         <div className="absolute inset-0 bg-black/65" />
         <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 pt-20 text-center">
-          <p className="mb-4 text-[10px] tracking-[0.4em] text-[#7A2432] uppercase">
+          <p className="mb-4 text-[10px] tracking-[0.4em] text-[#e56b8c] uppercase">
             {t.faq.eyebrow}
           </p>
           <h1 className="font-serif text-5xl text-white sm:text-6xl">

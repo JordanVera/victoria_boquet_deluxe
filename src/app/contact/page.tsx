@@ -31,7 +31,7 @@ export default async function ContactPage() {
         />
         <div className="absolute inset-0 bg-black/65" />
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 pt-20">
-          <p className="text-[#7A2432] text-[10px] tracking-[0.4em] uppercase mb-4">
+          <p className="text-[#e56b8c] text-[10px] tracking-[0.4em] uppercase mb-4">
             {t.contact.eyebrow}
           </p>
           <h1 className="font-serif text-white text-5xl sm:text-6xl">
@@ -44,7 +44,7 @@ export default async function ContactPage() {
         <div className="grid lg:grid-cols-[1fr_1.5fr] gap-16">
           <div className="flex flex-col gap-10">
             <div>
-              <p className="text-[#7A2432] text-[10px] tracking-[0.35em] uppercase mb-4">
+              <p className="text-[#e56b8c] text-[10px] tracking-[0.35em] uppercase mb-4">
                 {t.contact.questionsEyebrow}
               </p>
               <h2 className="font-serif text-foreground text-3xl sm:text-4xl">
@@ -57,8 +57,8 @@ export default async function ContactPage() {
 
             <ul className="flex flex-col gap-6">
               <li className="flex items-start gap-4">
-                <div className="w-10 h-10 border border-[#7A2432]/30 flex items-center justify-center flex-shrink-0">
-                  <MapPin size={14} className="text-[#7A2432]" />
+                <div className="w-10 h-10 border border-[#e56b8c]/30 flex items-center justify-center flex-shrink-0">
+                  <MapPin size={14} className="text-[#e56b8c]" />
                 </div>
                 <div>
                   <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/40 mb-0.5">
@@ -72,8 +72,8 @@ export default async function ContactPage() {
                 </div>
               </li>
               <li className="flex items-start gap-4">
-                <div className="w-10 h-10 border border-[#7A2432]/30 flex items-center justify-center flex-shrink-0">
-                  <Clock size={14} className="text-[#7A2432]" />
+                <div className="w-10 h-10 border border-[#e56b8c]/30 flex items-center justify-center flex-shrink-0">
+                  <Clock size={14} className="text-[#e56b8c]" />
                 </div>
                 <div>
                   <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/40 mb-0.5">
@@ -88,7 +88,7 @@ export default async function ContactPage() {
               href={COMPANY.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2.5 border border-border hover:border-[#7A2432]/50 text-foreground/60 hover:text-[#7A2432] text-xs transition-all w-fit"
+              className="flex items-center gap-2 px-4 py-2.5 border border-border hover:border-[#e56b8c]/50 text-foreground/60 hover:text-[#e56b8c] text-xs transition-all w-fit"
             >
               {t.contact.instagram} {COMPANY.instagramHandle}
             </a>

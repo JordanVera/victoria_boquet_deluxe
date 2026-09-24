@@ -20,7 +20,7 @@ export default function PricingContent() {
             {t.pricing.depositLead}{' '}
             <Link
               href="/order"
-              className="text-[#7A2432] underline-offset-4 transition-colors hover:text-[#5F1C27] hover:underline"
+              className="text-[#e56b8c] underline-offset-4 transition-colors hover:text-[#c94f71] hover:underline"
             >
               {t.pricing.startOrder}
             </Link>
@@ -36,16 +36,16 @@ export default function PricingContent() {
                 key={pkg.id}
                 className={`flex flex-col border p-8 ${
                   pkg.highlighted
-                    ? 'border-[#7A2432] bg-[#F6F1EA] shadow-lg shadow-[#7A2432]/10'
+                    ? 'border-[#e56b8c] bg-[#fbf0f3] shadow-lg shadow-[#e56b8c]/10'
                     : 'border-border bg-card'
                 }`}
               >
                 {pkg.highlighted ? (
-                  <span className="self-start bg-[#7A2432] px-3 py-1 text-[10px] tracking-[0.2em] uppercase text-white mb-4">
+                  <span className="self-start bg-[#e56b8c] px-3 py-1 text-[10px] tracking-[0.2em] uppercase text-white mb-4">
                     {t.pricing.mostPopular}
                   </span>
                 ) : null}
-                <p className="text-[#7A2432] text-[10px] tracking-[0.3em] uppercase">
+                <p className="text-[#e56b8c] text-[10px] tracking-[0.3em] uppercase">
                   {copy.name}
                 </p>
                 <p className="font-serif text-5xl text-foreground mt-2">
@@ -67,7 +67,7 @@ export default function PricingContent() {
                     >
                       <Check
                         size={14}
-                        className="text-[#7A2432] flex-shrink-0 mt-0.5"
+                        className="text-[#e56b8c] flex-shrink-0 mt-0.5"
                       />
                       {feature}
                     </li>
@@ -75,7 +75,7 @@ export default function PricingContent() {
                 </ul>
                 <Link
                   href="/order"
-                  className="mt-8 inline-flex justify-center bg-[#7A2432] px-6 py-3 text-xs tracking-[0.2em] uppercase text-white hover:bg-[#5F1C27] transition-colors"
+                  className="mt-8 inline-flex justify-center bg-[#e56b8c] px-6 py-3 text-xs tracking-[0.2em] uppercase text-white hover:bg-[#c94f71] transition-colors"
                 >
                   {t.pricing.orderPackage} {copy.name}
                 </Link>
@@ -88,7 +88,7 @@ export default function PricingContent() {
       {ADD_ONS.length > 0 ? (
         <section className="px-6 py-16 lg:px-8 bg-[#0e0c08]">
           <div className="mx-auto max-w-7xl">
-            <p className="text-[#C9A46C] text-[10px] tracking-[0.35em] uppercase mb-4 text-center">
+            <p className="text-[#f3c4ce] text-[10px] tracking-[0.35em] uppercase mb-4 text-center">
               {t.pricing.addOnsEyebrow}
             </p>
             <h2 className="font-serif text-white text-3xl text-center mb-12">
@@ -102,7 +102,7 @@ export default function PricingContent() {
                     key={addon.id}
                     className="border border-white/10 bg-[#161410] p-8"
                   >
-                    <p className="font-serif text-4xl text-[#C9A46C]">
+                    <p className="font-serif text-4xl text-[#f3c4ce]">
                       {addon.price}
                     </p>
                     <h3 className="font-serif text-2xl text-white mt-3">
@@ -119,7 +119,7 @@ export default function PricingContent() {
                         >
                           <Check
                             size={14}
-                            className="text-[#C9A46C] flex-shrink-0 mt-0.5"
+                            className="text-[#f3c4ce] flex-shrink-0 mt-0.5"
                           />
                           {feature}
                         </li>
@@ -146,7 +146,7 @@ export default function PricingContent() {
               >
                 <Check
                   size={14}
-                  className="text-[#7A2432] flex-shrink-0 mt-0.5"
+                  className="text-[#e56b8c] flex-shrink-0 mt-0.5"
                 />
                 {note}
               </li>

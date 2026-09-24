@@ -29,7 +29,7 @@ export default async function ReviewsPage() {
         />
         <div className="absolute inset-0 bg-black/65" />
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 pt-20">
-          <p className="text-[#7A2432] text-[10px] tracking-[0.4em] uppercase mb-4">
+          <p className="text-[#e56b8c] text-[10px] tracking-[0.4em] uppercase mb-4">
             {t.reviews.eyebrow}
           </p>
           <h1 className="font-serif text-white text-5xl sm:text-6xl">
@@ -55,7 +55,7 @@ export default async function ReviewsPage() {
                   <Star
                     key={n}
                     size={14}
-                    className="fill-[#7A2432] text-[#7A2432]"
+                    className="fill-[#e56b8c] text-[#e56b8c]"
                   />
                 ))}
               </div>
@@ -76,7 +76,7 @@ export default async function ReviewsPage() {
             href={COMPANY.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#7A2432] text-white text-xs tracking-[0.2em] uppercase font-medium hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#e56b8c] text-white text-xs tracking-[0.2em] uppercase font-medium hover:opacity-90 transition-opacity"
           >
             {t.reviews.seeMentions} <ExternalLink size={14} />
           </a>

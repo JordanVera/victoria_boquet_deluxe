@@ -9,10 +9,10 @@ export default function TestimonialsSection() {
   const { t } = useI18n();
 
   return (
-    <section className="py-24 px-6 lg:px-8 bg-[#F6F1EA]">
+    <section className="py-24 px-6 lg:px-8 bg-[#fbf0f3]">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <p className="text-[#7A2432] text-[10px] tracking-[0.35em] uppercase mb-4">
+          <p className="text-[#e56b8c] text-[10px] tracking-[0.35em] uppercase mb-4">
             {t.reviews.lovedOn}
           </p>
           <h2 className="font-serif text-foreground text-4xl sm:text-5xl">
@@ -35,7 +35,7 @@ export default function TestimonialsSection() {
                   <Star
                     key={n}
                     size={14}
-                    className="fill-[#7A2432] text-[#7A2432]"
+                    className="fill-[#e56b8c] text-[#e56b8c]"
                   />
                 ))}
               </div>

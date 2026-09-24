@@ -42,7 +42,7 @@ export default function StickyMobileCta() {
           <Link
             href="/order"
             tabIndex={visible ? 0 : -1}
-            className="shrink-0 bg-[#7A2432] px-5 py-3 text-[10px] font-medium tracking-[0.2em] text-white uppercase transition-colors hover:bg-[#5F1C27]"
+            className="shrink-0 bg-[#e56b8c] px-5 py-3 text-[10px] font-medium tracking-[0.2em] text-white uppercase transition-colors hover:bg-[#c94f71]"
           >
             {t.stickyCta.orderNow}
           </Link>

@@ -18,7 +18,7 @@ export default async function ThankYouPage() {
 
   return (
     <section className="min-h-[70vh] flex flex-col items-center justify-center px-6 py-32 text-center">
-      <p className="text-[#7A2432] text-[10px] tracking-[0.4em] uppercase mb-6">
+      <p className="text-[#e56b8c] text-[10px] tracking-[0.4em] uppercase mb-6">
         {t.thankYou.eyebrow}
       </p>
       <h1 className="font-serif text-foreground text-4xl sm:text-5xl mb-6">
@@ -30,13 +30,13 @@ export default async function ThankYouPage() {
       <div className="flex flex-col sm:flex-row gap-4">
         <Link
           href="/"
-          className="px-8 py-3.5 bg-[#7A2432] text-white text-xs tracking-[0.2em] uppercase hover:bg-[#5F1C27] transition-colors"
+          className="px-8 py-3.5 bg-[#e56b8c] text-white text-xs tracking-[0.2em] uppercase hover:bg-[#c94f71] transition-colors"
         >
           {t.thankYou.backHome}
         </Link>
         <Link
           href="/pricing"
-          className="px-8 py-3.5 border border-border text-foreground text-xs tracking-[0.2em] uppercase hover:border-[#7A2432] hover:text-[#7A2432] transition-colors"
+          className="px-8 py-3.5 border border-border text-foreground text-xs tracking-[0.2em] uppercase hover:border-[#e56b8c] hover:text-[#e56b8c] transition-colors"
         >
           {t.thankYou.viewPricing}
         </Link>
